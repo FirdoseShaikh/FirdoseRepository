@@ -11,7 +11,7 @@
         <parameter name="nodeURL" value="false" />
         <parameter name="browserName" value="chrome" />
         <parameter name="localBrowserPath"
-                   value="D:/driverchrome/chromedriver_win32/chromedriver.exe" />
+                   value="/chromedriver.exe" />
 
         <parameter name="url" value="https://www.google.com/" />
         <classes>

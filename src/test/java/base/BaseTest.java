@@ -59,6 +59,7 @@ public abstract class BaseTest {
   case "CHROME":
      
    final String dir_localBrowserPath = System.getProperty("user.dir")+"\\src\\test\\resources\\"+localBrowserPath;
+   //   final String dir_localBrowserPath = System.getProperty("user.dir")+"\\src\\test\\resources\\"+localBrowserPath;
       
    System.setProperty("webdriver.chrome.driver", dir_localBrowserPath);
 

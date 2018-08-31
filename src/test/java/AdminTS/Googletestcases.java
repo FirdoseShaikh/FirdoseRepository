@@ -33,6 +33,7 @@ public class Googletestcases extends BaseTest {
 		ExtentTestManager.getTest().getTest().setName("Gmail Opened");
 		
 	}
+	@Test(groups={TestGroups.SMOKE,TestGroups.REGRESSION},testName="Open Google images")
 	public void navigateToGoogleImages()
 	{
 		ExtentTestManager.getTest().getTest().setName("Google Image Navigation	");

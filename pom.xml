@@ -50,6 +50,20 @@
                   <!--  <groups>${TestGroup}</groups>-->
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-clover2-plugin</artifactId>
+                <configuration>
+                    <!-- Define a path to a license file: -->
+                    <licenseLocation>/path/to/clover.license</licenseLocation>
+
+                    <!-- Or embed a license key (remember to keep newline characters): -->
+                    <license><![CDATA[
+                    ...
+                ]]></license>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <dependencies>

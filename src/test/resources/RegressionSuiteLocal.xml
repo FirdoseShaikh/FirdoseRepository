@@ -7,18 +7,14 @@
       </listeners>-->
 
     <test name="Cync Test Suite">
-        <parameter name="selGrid" value="false" />
-        <parameter name="nodeURL" value="false" />
         <parameter name="browserName" value="chrome" />
         <parameter name="localBrowserPath"
                    value="/chromedriver.exe" />
-
-        <parameter name="url" value="https://www.google.com/" />
+        <parameter name="selGrid" value="true" />
+        <parameter name="nodeURL" value="http://172.16.5.89:4444/wd/hub"/>
+        <parameter name="url" value="https://www.google.com/"/>
         <classes>
-
-
             <class name="AdminTS.Googletestcases">
-
                 <methods>
                     <include name="navigateToGoogleTextBox"></include>
                     <include name="navigateToGmail"></include>

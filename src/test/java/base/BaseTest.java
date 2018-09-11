@@ -45,69 +45,83 @@ public abstract class BaseTest {
  @Parameters({"browserName","localBrowserPath","selGrid","nodeURL","url"})
  @BeforeMethod(alwaysRun=true)
  public void beforeMethod(@Optional ("chrome") String browserName,@Optional ("D:\\chromedriver.com") String localBrowserPath, 
-   @Optional("false") Boolean selGrid,@Optional ("http://localhost::4444") String nodeURL,@Optional ("https://www.google.com/") String url,
+   @Optional("false") Boolean selGrid,@Optional ("http://172.16.11.44:5566/wd/hub") String nodeURL,@Optional ("https://www.google.com/") String url,
    Method method
  ) throws MalformedURLException {
   
-  
-  String log4jConfPath = "log4j.properties";
-  PropertyConfigurator.configure(log4jConfPath);
-  
-  
-  String thread=Thread.currentThread().getName();
-  switch(browserName.toUpperCase()){
-  case "CHROME":
-     
-   final String dir_localBrowserPath = System.getProperty("user.dir")+"\\src\\test\\resources\\"+localBrowserPath;
-   //   final String dir_localBrowserPath = System.getProperty("user.dir")+"\\src\\test\\resources\\"+localBrowserPath;
-      
-   System.setProperty("webdriver.chrome.driver", dir_localBrowserPath);
+  if(selGrid) {
+     /* System.out.println("selGrid is "+selGrid);
+      //String log4jConfPath = "log4j.properties";
+      // PropertyConfigurator.configure(log4jConfPath);
+    //  DesiredCapabilities capability = DesiredCapabilities.chrome();
+      ChromeOptions capability =new ChromeOptions();
+      capability.setCapability("","");
+     // capability.setBrowserName(browserName);
+     // capability.setPlatform(Platform.extractFromSysProperty(os));
+      this.driver = new RemoteWebDriver(new URL(nodeURL), capability);*/
 
-            capability=DesiredCapabilities.chrome();
-            options=new ChromeOptions();
-            options.addArguments("Web Test","start-maximizing","no-default-browser-check");
-            capability.setCapability(ChromeOptions.CAPABILITY, options);
-            capability.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-          //  capability.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, true);
-            capability.setPlatform(Platform.ANY);
-            if(selGrid){
-             driver=new RemoteWebDriver(new URL(nodeURL),capability);
-              log.info("execution started in the CHROME browser");
-            }else{
-             driver=new ChromeDriver();
-              log.info("execution started in the CHROME browser");
-            }
-            
-            
-            drivers.put(driver, thread);
-            break;
-  case "FIREFOX":
 
-            System.setProperty("webdriver.gecko.driver", localBrowserPath);
-            capability=DesiredCapabilities.firefox();
-            capability.setCapability("marionette", true);
-            capability.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-            capability.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, true);
-            if(selGrid){
-             driver=new RemoteWebDriver(new URL(nodeURL),capability);
-            }else{
-             driver=new FirefoxDriver();
-            }
-            drivers.put(driver, thread);
-            break;
-  case "IE":
-            System.setProperty("webdriver.ie.driver", localBrowserPath);
-            capability=DesiredCapabilities.internetExplorer();
-            capability.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-            capability.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, true);
-            if(selGrid){
-             driver=new RemoteWebDriver(new URL(nodeURL),capability);
-            }else{
-                driver=new InternetExplorerDriver();
-            }
-            drivers.put(driver, thread);
-            break;
- }
+      System.out.println("Rakesh testing grid");
+      URL hub = new URL("http://172.16.5.89:4444/wd/hub");
+      DesiredCapabilities browser = DesiredCapabilities.chrome() ;
+      driver = new RemoteWebDriver(hub,browser);//http://172.16.5.89:4444/wd/hub
+  }
+  else {
+      String thread = Thread.currentThread().getName();
+      switch (browserName.toUpperCase()) {
+          case "CHROME":
+
+              final String dir_localBrowserPath = System.getProperty("user.dir") + "\\src\\test\\resources\\" + localBrowserPath;
+              //   final String dir_localBrowserPath = System.getProperty("user.dir")+"\\src\\test\\resources\\"+localBrowserPath;
+
+              System.setProperty("webdriver.chrome.driver", dir_localBrowserPath);
+
+              capability = DesiredCapabilities.chrome();
+              options = new ChromeOptions();
+              options.addArguments("Web Test", "start-maximizing", "no-default-browser-check");
+              capability.setCapability(ChromeOptions.CAPABILITY, options);
+              capability.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+              //  capability.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, true);
+              capability.setPlatform(Platform.ANY);
+              if (selGrid) {
+                  driver = new RemoteWebDriver(new URL(nodeURL), capability);
+                  log.info("execution started in the CHROME browser");
+              } else {
+                  driver = new ChromeDriver();
+                  log.info("execution started in the CHROME browser");
+              }
+
+
+              drivers.put(driver, thread);
+              break;
+          case "FIREFOX":
+
+              System.setProperty("webdriver.gecko.driver", localBrowserPath);
+              capability = DesiredCapabilities.firefox();
+              capability.setCapability("marionette", true);
+              capability.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+              capability.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, true);
+              if (selGrid) {
+                  driver = new RemoteWebDriver(new URL(nodeURL), capability);
+              } else {
+                  driver = new FirefoxDriver();
+              }
+              drivers.put(driver, thread);
+              break;
+          case "IE":
+              System.setProperty("webdriver.ie.driver", localBrowserPath);
+              capability = DesiredCapabilities.internetExplorer();
+              capability.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+              capability.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, true);
+              if (selGrid) {
+                  driver = new RemoteWebDriver(new URL(nodeURL), capability);
+              } else {
+                  driver = new InternetExplorerDriver();
+              }
+              drivers.put(driver, thread);
+              break;
+      }
+  }
   driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
   
   log.info("maximizing the Browser");
